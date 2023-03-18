@@ -13,6 +13,16 @@ const rules = [
     },
   },
   {
+    test: /\.(ts|tsx)$/,
+    use: {
+      loader: 'ts-loader',
+      options: {
+        configFile: path.resolve(__dirname, 'tsconfig.json'),
+      },
+    },
+    exclude: /node_modules/,
+  },
+  {
     test: /\.(png|woff|woff2|eot|ttf|svg|jpg|jpeg)$/,
     loader: "url-loader",
   },
@@ -29,18 +39,22 @@ const rules = [
 
 module.exports = {
   entry: [
-    path.join(__dirname, "src", "index.js"),
+    path.join(__dirname, "src", "index.tsx"),
     // path.join(__dirname, "src/stylesheets", "app.scss"),
   ],
   output: {
     publicPath: "/",
     filename: `[name].[hash].js`,
     path: path.resolve(__dirname, "./dist"),
+    clean: true,
+  },
+  resolve: {
+    extensions: [".ts", ".tsx", ".js", ".jsx"],
   },
   module: { rules },
   devServer: {
     historyApiFallback: true,
-    port: 9000,
+    port: 3000,
     open: true,
     hot: true, //hot module replacement
   },
